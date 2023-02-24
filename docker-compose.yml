@@ -44,7 +44,13 @@ services:
       CONNECT_PLUGIN_PATH: /usr/share/java/kafka-connect-plugins
     volumes:
       - ./kafka-connect/plugins:/usr/share/java/kafka-connect-plugins
-        #      - ./kafka-connect/jdbc:/usr/share/java/kafka-connect-jdbc
+  schema-registry:
+    image: confluentinc/cp-schema-registry:${CONFLUENT_VERSION:-latest}
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
+      SCHEMA_REGISTRY_HOST_NAME: ${HOST:?error}
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_SCHEMA_COMPATIBILITY_LEVEL: backward
   kafka-consumer:
     image: confluentinc/cp-kafka:${CONFLUENT_VERSION:-latest}
     command:
