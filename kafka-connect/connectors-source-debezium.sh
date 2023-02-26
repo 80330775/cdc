@@ -5,6 +5,10 @@ curl -X POST http://$HOST:8083/connectors \
 	"name": "debezium",
 	"config": {
 		"connector.class": "io.debezium.connector.mysql.MySqlConnector",
+    "key.converter": "io.confluent.connect.avro.AvroConverter",
+    "key.converter.schema.registry.url": "http://schema-registry:8081",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://schema-registry:8081",
 		"database.hostname": "mysql",
 		"database.port": "3306",
 		"database.user": "debezium",

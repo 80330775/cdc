@@ -32,20 +32,20 @@ services:
       CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_GROUP_ID: ${PROJECT:?error}
       CONNECT_CONFIG_STORAGE_TOPIC: ${PROJECT:?error}-connect-config
-      CONNECT_OFFSET_STORAGE_TOPIC: ${PROJECT:?error}-connect-offsets
-      CONNECT_STATUS_STORAGE_TOPIC: ${PROJECT:?error}-connect-status
-      CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
-      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: -1
+      CONNECT_OFFSET_STORAGE_TOPIC: ${PROJECT:?error}-connect-offsets
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: -1
-      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: -1
       CONNECT_OFFSET_STORAGE_PARTITIONS: -1
+      CONNECT_STATUS_STORAGE_TOPIC: ${PROJECT:?error}-connect-status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: -1
       CONNECT_STATUS_STORAGE_PARTITIONS: -1
       CONNECT_PLUGIN_PATH: /usr/share/java/kafka-connect-plugins
     volumes:
       - ./kafka-connect/plugins:/usr/share/java/kafka-connect-plugins
   schema-registry:
     image: confluentinc/cp-schema-registry:${CONFLUENT_VERSION:-latest}
+    ports:
+      - 8081:8081
     environment:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
       SCHEMA_REGISTRY_HOST_NAME: ${HOST:?error}
